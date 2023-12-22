@@ -1,0 +1,52 @@
+.fh5co-nav .menu-2 li.search {
+    width: 66%;
+}
+.fh5co-nav .menu-2 li.shopping-cart {
+    float: none;
+}
+.nav-link {
+    color: #d0c286;
+}
+.nav-link:focus, .nav-link:hover{
+    color: #d0c286;
+}
+.nav-right{
+    display: flex;
+    justify-content: right;
+}
+a{
+    text-decoration: none;
+}
+.offcanvas{
+    position: initial;
+    display: block;
+    visibility: visible;
+}
+#fh5co-offcanvas hr {
+    margin: 3rem 0;
+}
+#fh5co-offcanvas ul li a.cart {
+    margin-top: 0px;
+}
+#fh5co-offcanvas ul li button {
+    float: right;
+    margin: 0px;
+    border: 0px;
+    padding: 0px;
+}
+.dropdown-toggle::after {
+    margin-right: 0.255em;
+}
+.dropdown-menu.show {
+    display: block!important;
+}
+.icon.trash{
+    background-color: #d15454!important;
+    border: 0;
+    line-height: normal;
+    transition: 0.5s;
+}
+.icon.trash:hover {
+    color: #d15454!important;
+    background: #fff!important;
+}
