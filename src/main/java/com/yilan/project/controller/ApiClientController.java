@@ -1,6 +1,9 @@
 package com.yilan.project.controller;
 
 import com.google.gson.Gson;
+import com.yilan.project.dto.OrderRequest;
+import com.yilan.project.service.ClientService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 public class ApiClientController {
     private final Gson gson = new Gson();
+    @Autowired
+    private ClientService clientService;
 
     @GetMapping(value = "/a", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getJson(){
@@ -20,21 +25,22 @@ public class ApiClientController {
                 """;
     }
 
-    @RequestMapping(value = "/b", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getJsonByA(@RequestParam("value") String a){
-        return """
-                {
-                    a:\040""" + a + """
-                }
-                """;
+    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String login(@RequestParam("username") String username, @RequestParam("password") String password){
+        return gson.toJson(clientService.authenticate(username, password));
+    }
+    @PostMapping(value = "/signUp", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String signUp(@RequestParam("username") String username, @RequestParam("password") String password,
+                          @RequestParam("phoneNumber") String phoneNumber){
+        return clientService.signUp(username, password, phoneNumber) ? "OK" : "FAIL";
+    }
+    @RequestMapping(value = "/getItem", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getItem(@RequestParam("id") Integer id){
+        return gson.toJson(clientService.getItemById(id));
     }
 
-    @PostMapping(value = "/send", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String handleData(@RequestBody String data){  // Any Object
-        return """
-                {
-                    a:\040""" + data + """
-                }
-                """;
+    @PostMapping(value = "/pay", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String handleData(@RequestBody OrderRequest orderRequest){
+        return clientService.payOrder(orderRequest);
     }
 }

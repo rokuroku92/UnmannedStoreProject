@@ -1,9 +1,15 @@
 package com.yilan.project.repository.Impl;
 
+import com.yilan.project.model.Account;
+import com.yilan.project.model.Category;
+import com.yilan.project.model.Item;
 import com.yilan.project.repository.AccountDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class AccountDaoImpl implements AccountDao {
@@ -11,18 +17,27 @@ public class AccountDaoImpl implements AccountDao {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public int authenticate(String inputAccount, String inputPassword) {
-        String sql = "SELECT * FROM `account_info` WHERE `account` = ?";
+    public Account authenticate(String inputUsername, String inputPassword) {
+        String sql = "SELECT * FROM `account_info` WHERE `username` = ?";
 
-        Integer result = jdbcTemplate.query(sql, resultSet -> {
-            if (resultSet.next() && inputPassword.equals(resultSet.getString("password"))) {
-                return resultSet.getInt("id");  // 驗證成功，返回 id
-            } else {
-                return -1;  // 驗證失敗，返回 -1
+        List<Account> result = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Account.class), inputUsername);
+
+        if (!result.isEmpty()) {
+            Account user = result.get(0);
+            if (inputPassword.equals(user.getPassword())) {
+                return user;  // 驗證成功
             }
-        }, inputAccount);
+        }
+        return null;  // 驗證失敗
+    }
 
-        return (result != null) ? result : -1;
+    @Override
+    public boolean insertAccount(String username, String password, String phoneNumber){
+        String sql = "INSERT INTO `account_info` (`username`, `password`, `phone_number`, `level`) VALUES " +
+                "(?, ?, ?, 1);";
+        // 使用 JdbcTemplate 的 update 方法執行 SQL 語句
+        int rowsAffected = jdbcTemplate.update(sql, username, password, phoneNumber);
+        return (rowsAffected > 0);
     }
 
 
