@@ -38,21 +38,6 @@ public class ApiAdminController {
     public String updateItem(@RequestBody UpdateItemRequest updateItemRequest){
         return adminService.updateItem(updateItemRequest);
     }
-    @RequestMapping(value = "/b", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getJsonByA(@RequestParam("value") String a){
-        return """
-                {
-                    a:\040""" + a + """
-                }
-                """;
-    }
 
-    @PostMapping(value = "/send", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String handleData(@RequestBody String data){  // Any Object
-        return """
-                {
-                    a:\040""" + data + """
-                }
-                """;
-    }
+
 }

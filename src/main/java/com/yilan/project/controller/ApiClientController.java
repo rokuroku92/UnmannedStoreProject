@@ -16,15 +16,6 @@ public class ApiClientController {
     @Autowired
     private ClientService clientService;
 
-    @GetMapping(value = "/a", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getJson(){
-        return """
-                {
-                    a: 50
-                }
-                """;
-    }
-
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public String login(@RequestParam("username") String username, @RequestParam("password") String password){
         return gson.toJson(clientService.authenticate(username, password));

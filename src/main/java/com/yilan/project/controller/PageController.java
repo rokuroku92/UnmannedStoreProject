@@ -9,20 +9,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PageController {
 
     @GetMapping(value = "/login")
-    public String pageSignIn() {
+    public String pageLogin() {
         return "login";
+    }
+    @GetMapping(value = "/signup")
+    public String pageSignUp() {
+        return "signup";
     }
     @GetMapping(value = "/")
     public String pageIndex() {
-        return "index";
+        return "services";
     }
     @GetMapping(value = "/product")
     public String pageProduct() {
         return "product";
     }
-    @GetMapping(value = "/service")
+    @GetMapping(value = "/services")
     public String pageService() {
-        return "service";
+        return "services";
     }
     @GetMapping(value = "/about")
     public String pageAbout() {
