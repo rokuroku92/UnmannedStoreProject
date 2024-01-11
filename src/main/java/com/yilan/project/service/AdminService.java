@@ -3,7 +3,9 @@ package com.yilan.project.service;
 import com.yilan.project.dto.PutItemRequest;
 import com.yilan.project.dto.UpdateItemRequest;
 import com.yilan.project.model.Item;
+import com.yilan.project.model.Order;
 import com.yilan.project.repository.ItemDao;
+import com.yilan.project.repository.OrderDao;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +18,16 @@ public class AdminService {
     @Autowired
     private ItemDao itemDao;
 
+    @Autowired
+    private OrderDao orderDao;
+
+
     public List<Item> getAllItem(){
         return itemDao.queryAllItem();
+    }
+
+    public List<Order> getAllOrders(){
+        return orderDao.queryAllOrder();
     }
 
     public String putItem(@NotNull PutItemRequest putItemRequest, MultipartFile img){

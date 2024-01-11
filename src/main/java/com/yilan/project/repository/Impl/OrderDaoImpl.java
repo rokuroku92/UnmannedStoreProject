@@ -17,7 +17,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> queryAllOrder(){
         String sql = "SELECT oh.id, ai.username AS username, oh.order_number, oh.payment_amount, oh.create_time " +
-                    "FROM order_history oh INNER JOIN account_info ai ON oh.account_id = ai.id DESC";
+                    "FROM order_history oh INNER JOIN account_info ai ON oh.account_id = ai.id ORDER BY id DESC";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Order.class));
     }
 

@@ -22,6 +22,12 @@ public class ApiAdminController {
     public String getAllItem(){
         return gson.toJson(adminService.getAllItem());
     }
+
+    @GetMapping(value = "/getAllOrder", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getAllOrder(){
+        return gson.toJson(adminService.getAllOrders());
+    }
+
     @PostMapping(value = "/putItem", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
     public String putItem(@ModelAttribute PutItemRequest putItemRequest,
                           @ModelAttribute("img") MultipartFile img){
